@@ -73,18 +73,6 @@ const config = {
     port: 8000,
     mediaroot: './media',
     allow_origin: '*'
-  },
-  trans: {
-    ffmpeg: require('@ffmpeg-installer/ffmpeg').path,
-    tasks: [
-      {
-        app: 'live',
-        hls: true,
-        hlsFlags: '[hls_time=4:hls_list_size=5:hls_flags=delete_segments]',
-        hlsKeep: true, // Keep segments for better playback
-        dash: false
-      }
-    ]
   }
 };
 
