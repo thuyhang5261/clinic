@@ -10,7 +10,7 @@ const { spawn } = require('child_process');
 
 const app = express();
 const HTTP_PORT = 3000;
-const HTTPS_PORT = 3443; // Changed from 443 to avoid permission issues
+const HTTPS_PORT = 443;
 const RTMP_PORT = 1935;
 
 // Ensure media directories exist
@@ -174,11 +174,25 @@ wss.on('connection', (ws) => {
 
 // API endpoints
 app.get('/api/stats', (req, res) => {
-  const isLive = fs.existsSync(path.join(liveDir, 'stream.m3u8'));
+  const streamPath = path.join(liveDir, 'stream', 'index.m3u8');
+  const isLive = fs.existsSync(streamPath);
+  
   res.json({ 
     viewers: isLive ? Math.floor(Math.random() * 100) + 10 : 0,
     isLive: isLive,
-    activeStreams: ffmpegProcesses.size
+    activeStreams: ffmpegProcesses.size,
+    streamPath: streamPath.replace(__dirname, ''),
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    memory: process.memoryUsage()
   });
 });
 
