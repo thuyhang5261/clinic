@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Hồng Nhan</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta content="Hồng Nhan" name="name" />
+  <meta
+    content="Tại Hồng Nhan, chúng tôi không chỉ mang đến những dịch vụ thẩm mỹ hiện đại, an toàn và hiệu quả- mà còn trao gửi sự tự tin, niềm vui và cảm hứng sống tích cực cho mỗi khách hàng. Với đội ngũ chuyên gia giàu kinh nghiệm, công nghệ tiên tiến và quy trình chăm sóc tận tâm, Hồng Nhan là nơi bạn có thể yên tâm gửi gắm hành trình làm đẹp của mình."
+    name="description" />
+
+  <!-- Favicon - Fixed path -->
+  <link href="data:," rel="icon" />
+
+
+
+  <!-- Favicon -->
+  <link href="img/favicon.ico" rel="icon" />
+
+  <!-- Google Web Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700;900&display=swap"
+    rel="stylesheet" />
+
+  <!-- Icon Font Stylesheet -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <!-- Libraries Stylesheet -->
+  <link href="lib/animate/animate.min.css" rel="stylesheet" />
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+  <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+  <!-- Customized Bootstrap Stylesheet -->
+  <link href="css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Template Stylesheet -->
+  <link href="css/style.css" rel="stylesheet" />
+  <!-- Add Socket.io and HLS.js CDN -->
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-54ZHRD3QYE"></script>
+  <script>
+    window.dataLayer = window.dataLayer || []
+
+    function gtag() {
+      dataLayer.push(arguments)
+    }
+    gtag('js', new Date())
+
+    gtag('config', 'G-54ZHRD3QYE')
+  </script>
+
+  <!-- Google tag (gtag.js) event - delayed navigation helper -->
+  <script>
+    // Helper function to delay opening a URL until a gtag event is sent.
+    // Call it in response to an action that should navigate to a URL.
+    function gtagSendEvent(url) {
+      var callback = function () {
+        if (typeof url === 'string') {
+          window.location = url
+        }
+      }
+      gtag('event', 'ads_conversion_L_t_mua_h_ng_1', {
+        event_callback: callback,
+        event_timeout: 2000
+        // <event_parameters>
+      })
+      return false
+    }
+
+    // Add conversion tracking function for Zalo clicks
+    function gtag_report_conversion(url) {
+      var callback = function () {
+        if (typeof url != 'undefined') {
+          window.open(url, '_blank')
+        }
+      }
+      gtag('event', 'conversion', {
+        send_to: 'G-54ZHRD3QYE/zalo_click',
+        event_callback: callback,
+        event_timeout: 2000
+      })
+      return false
+    }
+  </script>
+
+  <style>
+    @keyframes zoom {
+      0% {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+
+      50% {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes lucidgenphoneCircle {
+      0% {
+        transform: rotate(-25deg);
+      }
+
+      50% {
+        transform: rotate(25deg);
+      }
+
+      100% {
+        transform: rotate(-25deg);
+      }
+    }
+
+    @keyframes lucidgenzalo {
+      0% {
+        transform: rotate(-25deg);
+      }
+
+      50% {
+        transform: rotate(25deg);
+      }
+
+      100% {
+        transform: rotate(-25deg);
+      }
+    }
+
+    .jscroll-to-top {
+      bottom: 100px;
+    }
+
+    .fcta-phoneCircle-ben-trong-nut svg path {
+      fill: #ffffff;
+    }
+
+    .fcta-phoneCircle-vi-tri-nut {
+      position: fixed;
+      bottom: 24px;
+      right: 20px;
+      z-index: 999;
+    }
+
+    .fcta-phoneCircle-nen-nut,
+    div.fcta-phoneCircle-mess {
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06), 0 2px 32px rgba(0, 0, 0, 0.16);
+    }
+
+    .fcta-phoneCircle-nen-nut {
+      width: 50px;
+      height: 50px;
+      text-align: center;
+      color: #fff;
+      background: #35ce58;
+      border-radius: 50%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .fcta-phoneCircle-nen-nut::after,
+    .fcta-phoneCircle-nen-nut::before {
+      content: '';
+      position: absolute;
+      border: 1px solid #35ce58;
+      background: #28a745;
+      z-index: -1;
+      left: -20px;
+      right: -20px;
+      top: -20px;
+      bottom: -20px;
+      border-radius: 50%;
+      animation: zoom 1.9s linear infinite;
+    }
+
+    .fcta-phoneCircle-nen-nut::after {
+      animation-delay: 0.4s;
+    }
+
+    .fcta-phoneCircle-ben-trong-nut,
+    .fcta-phoneCircle-ben-trong-nut i {
+      transition: all 1s;
+    }
+
+    .fcta-phoneCircle-ben-trong-nut {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 1;
+    }
+
+    #svg_phoneCircle_icon {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .fcta-phoneCircle-ben-trong-nut i {
+      animation: lucidgenphoneCircle 1s linear infinite;
+    }
+
+    .fcta-phoneCircle-nen-nut:hover .fcta-phoneCircle-ben-trong-nut,
+    .fcta-phoneCircle-text {
+      opacity: 1;
+    }
+
+    .fcta-phoneCircle-nen-nut:hover i {
+      transform: scale(0.5);
+      transition: all 0.5s ease-in;
+    }
+
+    .fcta-phoneCircle-text a {
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .fcta-phoneCircle-text {
+      position: absolute;
+      top: 6px;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 700;
+      transform: scaleX(-1);
+      transition: all 0.5s;
+      line-height: 1.5;
+    }
+
+    .fcta-phoneCircle-nen-nut:hover .fcta-phoneCircle-text {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+
+    div.fcta-phoneCircle-mess {
+      position: fixed;
+      bottom: 29px;
+      right: 58px;
+      z-index: 99;
+      background: #fff;
+      padding: 7px 25px 7px 15px;
+      color: #66cc66;
+      border-radius: 50px 0 0 50px;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .fcta-phoneCircle-mess span {
+      color: #88ff2b !important;
+    }
+
+    span#fcta-phoneCircle-tracking {
+      font-family: Roboto;
+      line-height: 1.5;
+    }
+
+    .fcta-phoneCircle-text {
+      font-family: Roboto;
+    }
+
+    #linkphoneCircle {
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      outline: none;
+    }
+
+    #linkphoneCircle:focus {
+      outline: none;
+    }
+
+    .fcta-zalo-vi-tri-nut {
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+      z-index: 999;
+    }
+
+    .fcta-zalo-nen-nut,
+    div.fcta-zalo-mess {
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06), 0 2px 32px rgba(0, 0, 0, 0.16);
+    }
+
+    .fcta-zalo-nen-nut {
+      width: 50px;
+      height: 50px;
+      text-align: center;
+      color: #fff;
+      background: #0068ff;
+      border-radius: 50%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .fcta-zalo-nen-nut::after,
+    .fcta-zalo-nen-nut::before {
+      content: '';
+      position: absolute;
+      border: 1px solid #0068ff;
+      background: #0068ff80;
+      z-index: -1;
+      left: -20px;
+      right: -20px;
+      top: -20px;
+      bottom: -20px;
+      border-radius: 50%;
+      animation: zoom 1.9s linear infinite;
+    }
+
+    .fcta-zalo-nen-nut::after {
+      animation-delay: 0.4s;
+    }
+
+    .fcta-zalo-ben-trong-nut svg path {
+      fill: #fff;
+    }
+
+    .fcta-zalo-ben-trong-nut {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 1;
+    }
+
+    #svg_zalo_icon {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .fcta-zalo-ben-trong-nut i {
+      animation: lucidgenzalo 1s linear infinite;
+    }
+
+    .fcta-zalo-nen-nut:hover .fcta-zalo-ben-trong-nut,
+    .fcta-zalo-text {
+      opacity: 1;
+    }
+
+    .fcta-zalo-nen-nut:hover i {
+      transform: scale(0.5);
+      transition: all 0.5s ease-in;
+    }
+
+    .fcta-zalo-text a {
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .fcta-zalo-text {
+      position: absolute;
+      top: 6px;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 700;
+      transform: scaleX(-1);
+      transition: all 0.5s;
+      line-height: 1.5;
+    }
+
+    .fcta-zalo-nen-nut:hover .fcta-zalo-text {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+
+    div.fcta-zalo-mess {
+      position: fixed;
+      bottom: 89px;
+      right: 58px;
+      z-index: 99;
+      background: #fff;
+      padding: 7px 25px 7px 15px;
+      color: #0068ff;
+      border-radius: 50px 0 0 50px;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .fcta-zalo-mess span {
+      color: #0068ff !important;
+    }
+
+    span#fcta-zalo-tracking {
+      font-family: Roboto;
+      line-height: 1.5;
+    }
+
+    @keyframes lucidgenzalo {
+      0% {
+        transform: rotate(-25deg);
+      }
+
+      50% {
+        transform: rotate(25deg);
+      }
+
+      100% {
+        transform: rotate(-25deg);
+      }
+    }
+
+    /* livestream */
+    .livestream-container {
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .livestream-window {
+      background: #000;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .window-header {
+      background: linear-gradient(90deg, #333, #444);
+      height: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 15px;
+    }
+
+    .window-title {
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .window-controls {
+      display: flex;
+      gap: 10px;
+    }
+
+    .window-btn {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+    }
+
+    .expand-btn {
+      background: #ffc107;
+      color: #000;
+    }
+
+    .close-btn {
+      background: #dc3545;
+      color: white;
+    }
+
+    .window-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .video-container {
+      position: relative;
+      height: 400px;
+      overflow: hidden;
+    }
+
+    #videoElement {
+      transform: scaleX(-1);
+      border: none;
+    }
+
+    .control-bar {
+      background: linear-gradient(90deg, #2c3e50, #34495e);
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .control-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 25px;
+      padding: 8px 15px;
+      color: white;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      min-width: 70px;
+      justify-content: center;
+    }
+
+    .control-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .control-btn.active {
+      background: #28a745;
+    }
+
+    .control-btn.live {
+      background: #dc3545;
+      color: white;
+      font-weight: bold;
+    }
+
+    .control-btn.live.active {
+      background: #ff1744;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(255, 23, 68, 0.7);
+      }
+
+      70% {
+        box-shadow: 0 0 0 10px rgba(255, 23, 68, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(255, 23, 68, 0);
+      }
+    }
+
+    .status-indicator {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      z-index: 10;
+    }
+
+    /* Chat Styles */
+    .chat-container {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      height: 548px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .chat-header {
+      background: var(--primary);
+      color: white;
+      padding: 15px;
+      border-radius: 15px 15px 0 0;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 15px;
+      background: white;
+    }
+
+    .chat-message {
+      background: #f8f9fa;
+      padding: 8px 12px;
+      margin: 5px 0;
+      border-radius: 18px;
+      font-size: 14px;
+      animation: fadeIn 0.5s ease-in;
+      max-width: 80%;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .chat-message.user {
+      background: #007bff;
+      color: white;
+      margin-left: auto;
+      text-align: right;
+    }
+
+    .chat-message.guest {
+      background: #e9ecef;
+    }
+
+    .chat-message.system {
+      background: #28a745;
+      color: white;
+      text-align: center;
+      margin: 10px auto;
+      max-width: 60%;
+    }
+
+    .chat-message.fade {
+      opacity: 0.4;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .chat-input-container {
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 0 0 15px 15px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .chat-input {
+      flex: 1;
+      border: 1px solid #dee2e6;
+      border-radius: 25px;
+      padding: 10px 15px;
+      font-size: 14px;
+    }
+
+    .chat-btn {
+      background: #007bff;
+      border: none;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chat-btn:hover {
+      background: #0056b3;
+      transform: scale(1.1);
+    }
+
+    .chat-btn.heart {
+      background: #dc3545;
+    }
+
+    .chat-btn.heart:hover {
+      background: #c82333;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 991.98px) {
+      .video-container {
+        height: 300px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .control-btn {
+        padding: 6px 10px;
+        font-size: 10px;
+        min-width: 60px;
+      }
+
+      .livestream-container {
+        padding: 10px;
+      }
+
+      .video-container {
+        height: 250px;
+      }
+    }
+
+    .fullscreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1000;
+      border-radius: 0;
+    }
+
+    .fullscreen .video-container {
+      height: calc(100vh - 120px);
+    }
+
+    /* heartfloating */
+    #count {
+      margin-top: 20px;
+      font-size: 24px;
+    }
+
+    .heartAnimate {
+      position: fixed;
+      font-size: 24px;
+      animation: floatUp 1.2s ease-out forwards;
+      opacity: 0;
+      z-index: 9999;
+      pointer-events: none;
+    }
+
+    .chatHeartAnimate {
+      position: fixed;
+      font-size: 24px;
+      animation: floatUp 1.2s ease-out forwards;
+      opacity: 0;
+      z-index: 9999;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-100px) scale(1.5);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Facebook SDK -->
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous"
+    src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v23.0"></script>
+
+  <!-- Spinner Start -->
+  <div id="spinner"
+    class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+      <span class="sr-only">Đang tải...</span>
+    </div>
+  </div>
+  <!-- Spinner End -->
+
+  <!-- Topbar Start -->
+  <div class="container-fluid bg-light p-0 wow fadeIn" data-wow-delay="0.1s">
+    <div class="row gx-0 d-none d-lg-flex">
+      <div class="col-lg-7 px-5 text-start">
+        <div class="h-100 d-inline-flex align-items-center py-3 me-4">
+          <small class="fa fa-map-marker-alt text-primary me-2"></small>
+          <small>Nguyễn Ảnh Thủ, Quận 12, TPHCM</small>
+        </div>
+        <div class="h-100 d-inline-flex align-items-center py-3">
+          <small class="far fa-clock text-primary me-2"></small>
+          <small>Thứ 2 - Thứ 6 : 09.00 Sáng - 09.00 Tối</small>
+        </div>
+      </div>
+      <div class="col-lg-5 px-5 text-end">
+        <a href="tel:0867607890" class="h-100 d-inline-flex align-items-center py-3 me-4 text-decoration-none"
+          style="color: inherit;">
+          <small class="fa fa-phone-alt text-primary me-2"></small>
+          <small>0867607890</small>
+        </a>
+        <div class="h-100 d-inline-flex align-items-center">
+          <a class="btn btn-sm-square rounded-circle bg-white text-primary me-1" href=""><i
+              class="fab fa-facebook-f"></i></a>
+          <a class="btn btn-sm-square rounded-circle bg-white text-primary me-1" href=""><i
+              class="fab fa-twitter"></i></a>
+          <a class="btn btn-sm-square rounded-circle bg-white text-primary me-1" href=""><i
+              class="fab fa-linkedin-in"></i></a>
+          <a class="btn btn-sm-square rounded-circle bg-white text-primary me-0" href=""><i
+              class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Topbar End -->
+
+  <!-- Navbar Start -->
+  <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0 wow fadeIn" data-wow-delay="0.1s">
+    <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+      <h2 class="m-0 text-primary"><i class="far fa-hospital me-3"></i>Hồng Nhan</h2>
+    </a>
+    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"><span
+        class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <div class="navbar-nav ms-auto p-4 p-lg-0">
+        <a href="index.php" class="nav-item nav-link active">Trang Chủ</a>
+        <a href="#" class="nav-item nav-link">Giới thiệu</a>
+        <a href="#" class="nav-item nav-link">Tin tức</a>
+        <div class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Dịch vụ</a>
+          <div class="dropdown-menu rounded-0 rounded-bottom m-0">
+            <a href="feature.html" class="dropdown-item">Tính năng</a>
+            <a href="team.html" class="dropdown-item">Bác sĩ của chúng tôi</a>
+            <a href="appointment.html" class="dropdown-item">Đặt lịch hẹn</a>
+            <a href="testimonial.html" class="dropdown-item">Lời chứng thực</a>
+            <a href="404.html" class="dropdown-item">Trang 404</a>
+          </div>
+        </div>
+        <a href="#" class="nav-item nav-link">Liên hệ</a>
+        <a href="#" class="nav-item nav-link">Tuyển dụng</a>
+      </div>
+      <a href="" class="btn btn-primary rounded-2 py-4 px-lg-5 d-none d-lg-block">Hẹn khám<i
+          class="fa fa-arrow-right ms-3"></i></a>
+    </div>
+  </nav>
+  <!-- Navbar End -->
+
+  <!-- Header Start -->
+  <div class="container-fluid header bg-primary p-0 mb-2">
+    <div class="row g-0 align-items-center flex-column-reverse flex-lg-row">
+      <!--     <div class="col-lg-6 p-5 wow fadeIn" data-wow-delay="0.1s">
+                <h1 class="display-4 text-dark mb-5">Good Health Is The Root Of All Heppiness</h1>
+                <div class="row g-4">
+                    <div class="col-sm-4">
+                        <div class="border-start border-light ps-4">
+                            <h2 class="text-dark mb-1" data-toggle="counter-up">123</h2>
+                            <p class="text-dark mb-0">Expert Doctors</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="border-start border-light ps-4">
+                            <h2 class="text-dark mb-1" data-toggle="counter-up">1234</h2>
+                            <p class="text-dark mb-0">Medical Stuff</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="border-start border-light ps-4">
+                            <h2 class="text-dark mb-1" data-toggle="counter-up">12345</h2>
+                            <p class="text-dark mb-0">Total Patients</p>
+                        </div>
+                    </div>
+                </div>
+            </div>     -->
+      <div class="col-lg-12 wow fadeIn" data-wow-delay="0.5s">
+        <div class="owl-carousel header-carousel">
+          <div class="owl-carousel-item position-relative">
+            <img class="img-fluid" src="img/1.png" alt="" />
+            <div class="owl-carousel-text">
+              <h1 class="display-1 text-white mb-0">Thẩm mĩ</h1>
+            </div>
+          </div>
+          <!--     <div class="owl-carousel-item position-relative">
+                        <img class="img-fluid" src="img/carousel-2.jpg" alt="">
+                        <div class="owl-carousel-text">
+                            <h1 class="display-1 text-white mb-0">Da liễu</h1>
+                        </div>
+                    </div>
+                    <div class="owl-carousel-item position-relative">
+                        <img class="img-fluid" src="img/carousel-3.jpg" alt="">
+                        <div class="owl-carousel-text">
+                            <h1 class="display-1 text-white mb-0">Nội tổng hợp</h1>
+                        </div>
+                    </div>     -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Header End -->
+
+  <!-- About Start -->
+  <div class="container-xxl py-3">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+          <div class="d-flex flex-column">
+            <img class="img-fluid rounded w-75 align-self-end" src="img/4.png" alt="" />
+            <img class="img-fluid rounded w-50 bg-white pt-3 pe-3" src="img/5.png" alt="" style="margin-top: -25%;" />
+          </div>
+        </div>
+        <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+          <div class="intro-section">
+            <p class="d-inline-block border rounded-pill py-2 px-4">Giới thiệu</p>
+            <h1 class="mb-4">Hành trình làm đẹp</h1>
+            <p>Tại Hồng Nhan, chúng tôi không chỉ mang đến những dịch vụ thẩm mỹ hiện đại, an toàn và hiệu quả - mà còn
+              trao gửi sự tự tin, niềm vui và cảm hứng sống tích cực cho mỗi khách hàng. Với đội ngũ chuyên gia giàu
+              kinh nghiệm, công nghệ tiên tiến và quy trình chăm sóc tận tâm, Hồng Nhan là nơi bạn có thể yên tâm gửi
+              gắm hành trình làm đẹp của mình.</p>
+            <p class="mb-4">
+              Người phụ nữ hiện đại, bản lĩnh và yêu bản thân:
+              <span style="color: black;">“Làm đẹp không phải để trở thành ai đó khác. Làm đẹp là để bạn nhìn vào gương
+                và mỉm cười với chính mình.”</span>
+              Đừng ngần ngại đầu tư cho vẻ ngoài - vì đó là cách bạn thể hiện sự yêu thương bản thân. Một làn da rạng
+              rỡ, một nụ cười tự tin, một ánh mắt cuốn hút… tất cả đều bắt đầu từ quyết định chăm sóc chính mình. Hồng
+              Nhan luôn sẵn sàng đồng hành cùng bạn - từ những thay đổi nhỏ nhất đến những bước ngoặt lớn nhất trong
+              hành trình làm đẹp. Hãy để chúng tôi giúp bạn tỏa sáng theo cách riêng của bạn.
+            </p>
+            <p>
+              <i class="far fa-check-circle text-primary me-3"></i><strong style="color: black;">Dịch vụ chất
+                lượng:</strong>Mỗi liệu trình không chỉ là một bước làm đẹp - mà là một trải nghiệm chăm sóc toàn diện,
+              cao cấp và đầy yêu thương. Chúng tôi tự hào mang đến những dịch vụ chất lượng cao, được thiết kế riêng cho
+              từng làn da, từng độ tuổi và từng nhu cầu cá nhân.
+            </p>
+            <p>
+              <i class="far fa-check-circle text-primary me-3"></i><strong style="color: black;">Chuyên môn
+                cao:</strong>Đội ngũ bác sĩ và chuyên gia của chúng tôi đều có trình độ chuyên môn cao, nhiều năm kinh
+              nghiệm trong lĩnh vực thẩm mỹ, đảm bảo mang đến sự an tâm và hài lòng cho khách hàng.
+            </p>
+            <p>
+              <i class="far fa-check-circle text-primary me-3"></i> <strong style="color: black;">Giá trị bền
+                vững:</strong> mỗi dịch vụ của Hồng Nhan đều được xây dựng dựa trên tiêu chí an toàn - hiệu quả - minh
+              bạch, đảm bảo chất lượng tương xứng với chi phí đầu tư. Chúng tôi không chỉ mang đến kết quả thẩm mỹ vượt
+              trội, mà còn chú trọng đến trải nghiệm đẳng cấp và sự hài lòng tuyệt đối của khách hàng. Không gian sang
+              trọng - Quy trình chuẩn y khoa - Dịch vụ tận tâm Hồng Nhan không đơn thuần là nơi làm đẹp, mà là nơi khách
+              hàng được trân trọng, lắng nghe và chăm sóc toàn diện
+            </p>
+            <a class="btn btn-primary rounded-pill py-3 px-5 mt-1" href="">Xem thêm</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- About End -->
+  <!-- Appointment Start -->
+  <div class="container-xxl py-2">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+
+          <!-- Livestream Window -->
+          <div class="livestream-window" id="livestreamWindow">
+            <!-- Window Header -->
+            <div class="window-header">
+              <div class="window-title">
+                <i class="fas fa-broadcast-tower me-2"></i>LiveStream - Thắng
+              </div>
+              <div class="window-controls">
+                <button class="window-btn close-btn" id="closeBtn" title="Close"><i class="fas fa-times"></i></button>
+              </div>
+            </div>
+
+            <!-- Video Container -->
+            <div class="video-container">
+              <video id="streamPlayer" class="img-fluid w-100 h-100" autoplay muted playsinline
+                style="object-fit: cover;">
+                Your browser does not support the video tag.
+              </video>
+
+              <!-- Offline Message -->
+              <div class="offline-message" id="offlineMessage">
+                <h5>Stream Offline</h5>
+                <p>The stream will start automatically when available</p>
+                <div class="spinner-border spinner-border-sm" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+
+              <!-- Status Indicator -->
+              <div class="status-indicator" id="statusIndicator">
+                <span id="streamStatus">⏹️ OFFLINE</span>
+                <span id="viewerCount" class="ms-2"><i class="fas fa-eye me-1"></i>0 viewers</span>
+              </div>
+            </div>
+
+            <!-- Control Bar -->
+            <div class="control-bar">
+              <button class="control-btn" id="refreshBtn"><i class="fa-solid fa-arrows-rotate"></i></button>
+              <button class="control-btn" id="muteBtn"><i class="fa-solid fa-volume-xmark"></i></button>
+              <button class="control-btn" id="settingsBtn"><i class="fas fa-cog"></i></button>
+              <button class="control-btn" id="heartBtn"><img width="14" height="14"
+                  src="https://img.icons8.com/color/48/like--v3.png" alt="like--v3" /></button>
+              <button class="control-btn" id="fullscreenBtn"><i class="fas fa-expand"></i></button>
+              <button class="control-btn" id="shareBtn"><i class="fas fa-share"></i> Share</button>
+            </div>
+          </div>
+
+          <!-- <p class="d-inline-block border rounded-pill py-1 px-4">Đặt hẹn ngay</p>
+          <h1 class="mb-4">Đặt lịch hẹn với Bác sĩ</h1>
+
+          <p class="mb-4">Bác sĩ tư vấn thẩm mĩ 1:1, chính xác nhứng gì bạn cần</p>
+          <div class="bg-light rounded d-flex align-items-center p-5 mb-4">
+            <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-white"
+              style="width: 55px; height: 55px;">
+              <i class="fa fa-phone-alt text-primary"></i>
+            </div>
+            <div class="ms-4">
+              <p class="mb-2">Gọi ngay</p>
+              <h5 class="mb-0">0867607890</h5>
+            </div>
+          </div>
+          <div class="bg-light rounded d-flex align-items-center p-5">
+            <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-white"
+              style="width: 55px; height: 55px;">
+              <i class="fa fa-envelope-open text-primary"></i>
+            </div>
+            <div class="ms-4">
+              <p class="mb-2">Gởi email</p>
+              <h5 class="mb-0">hongnhantphcm@gmail.com</h5>
+            </div>
+          </div> -->
+        </div>
+
+        <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+
+          <!-- chatcontainer -->
+          <div class="chat-container" id="chatContainer">
+            <div class="chat-header">
+              <div class="text-dark"><i class="fas fa-comments me-2"></i>Live Chat</div>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+              <div class="chat-message system">Welcome to Thắng's Live Stream! 🎉</div>
+              <div class="chat-message guest">Hello everyone! 👋</div>
+              <div class="chat-message guest">Great stream quality!</div>
+            </div>
+            <div class="chat-input-container">
+              <textarea class="chat-input" id="chatInput" placeholder="Type your message..." rows="1"></textarea>
+              <button class="chat-btn" id="attachBtn" title="Attach File"><i class="fas fa-paperclip"></i></button>
+              <button class="chat-btn heart" id="chatheartBtn" title="Send Heart"><i class="fas fa-heart"></i></button>
+              <button class="chat-btn" id="sendBtn" title="Send Message"><i class="fas fa-paper-plane"></i></button>
+            </div>
+
+            <!-- chatcontainer end -->
+            <!-- <form>
+              <div class="row g-3">
+                <div class="col-12 col-sm-6">
+                  <input type="text" class="form-control border-0" placeholder="Họ tên" style="height: 55px;" />
+                </div>
+                <div class="col-12 col-sm-6">
+                  <input type="email" class="form-control border-0" placeholder="Email" style="height: 55px;" />
+                </div>
+
+                <div class="col-12 col-sm-6">
+                  <input type="text" class="form-control border-0" placeholder="Số điện thoại" style="height: 55px;" />
+                </div>
+                <div class="col-12 col-sm-6">
+                  <select class="form-select border-0" style="height: 55px;">
+                    <option selected>Chọn Bác sĩ</option>
+                    <option value="1">Bác sĩ 1</option>
+                    <option value="2">Bác sĩ 2</option>
+                    <option value="3">Bác sĩ 3</option>
+                  </select>
+                </div>
+                <div class="col-12 col-sm-6">
+                  <div class="date" id="date" data-target-input="nearest">
+                    <input type="text" class="form-control border-0 datetimepicker-input" placeholder="chọn ngày"
+                      data-target="#date" data-toggle="datetimepicker" style="height: 55px;" />
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                  <div class="time" id="time" data-target-input="nearest">
+                    <input type="text" class="form-control border-0 datetimepicker-input" placeholder="Chọn thời gian"
+                      data-target="#time" data-toggle="datetimepicker" style="height: 55px;" />
+                  </div>
+                </div>
+                <div class="col-12">
+                  <textarea class="form-control border-0" rows="7" placeholder="Tin nhắn"></textarea>
+                </div>
+                <div class="col-12">
+                  <button class="btn btn-primary w-100 py-3" type="submit">Gửi</button>
+                </div>
+              </div>
+            </form> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Appointment End -->
+  <!-- Feature Start -->
+  <div class="container-fluid bg-primary overflow-hidden my-3 px-lg-0">
+    <div class="container feature px-lg-0">
+      <div class="row g-0 mx-lg-0 py-4">
+        <div class="col-lg-6 feature-text py-3 wow fadeIn" data-wow-delay="0.1s">
+          <div class="p-lg-5 ps-lg-0">
+            <p class="d-inline-block border rounded-pill text-dark py-2 px-4">Chức năng</p>
+            <h1 class="text-dark mb-4">Hồng Nhan</h1>
+            <p class="text-dark mb-4 pb-2">Đơn vị tiên phong tại Việt Nam: chúng tôi cung cấp giải pháp toàn diện cho
+              mọi giới tính.Dịch vụ đa dạng: cắt mí, nâng mũi, xóa nhăn, trẻ hóa da, căng da chỉ vàng, hút mỡ,... tất cả
+              đều được thực hiện bởi đội ngũ bác sĩ có chứng chỉ hành nghề và kinh nghiệm trên 10 năm. Hỗ trợ cộng đồng
+              LGBT: thấu hiểu tâm tư nguyện vọng của cộng đồng, chuyên môn thừa đáp ứng các tiêu chuẩn vàng, chúng tôi
+              giúp xây dựng lại hình ảnh theo mơ ước, khát vọng của mỗi cá nhân, qua đó xây dựng sự tự tin, thoải mái và
+              thành công trong cuộc sống. Cơ sở vật chất hiện đại: Trang thiết bị thẩm mỹ tiên tiến, môi trường điều trị
+              đạt chuẩn quốc tế, đảm bảo an toàn và hiệu quả. Đội ngũ bác sĩ đầu ngành: Các bác sĩ được đào tạo tại các
+              trường đại học danh tiếng, nhiều năm công tác tại các Bệnh viện Hạng nhất và có kinh nghiệm xử lý các ca
+              thẩm mỹ phức tạp.</p>
+            <!--     <div class="row g-4">
+                            <div class="col-6">
+                                <div class="d-flex align-items-center">
+                                    <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-light" style="width: 55px; height: 55px;">
+                                        <i class="fa fa-user-md text-primary"></i>
+                                    </div>
+                                    <div class="ms-4">
+                                        <p class="text-dark mb-2">Chuyên môn cao</p>
+                                        <h5 class="text-dark mb-0">Bác sĩ</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="d-flex align-items-center">
+                                    <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-light" style="width: 55px; height: 55px;">
+                                        <i class="fa fa-check text-primary"></i>
+                                    </div>
+                                    <div class="ms-4">
+                                        <p class="text-dark mb-2">Chất lượng cao</p>
+                                        <h5 class="text-dark mb-0">Dịch vụ</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="d-flex align-items-center">
+                                    <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-light" style="width: 55px; height: 55px;">
+                                        <i class="fa fa-comment-medical text-primary"></i>
+                                    </div>
+                                    <div class="ms-4">
+                                        <p class="text-dark mb-2">Thân thiện-minh bạch</p>
+                                        <h5 class="text-dark mb-0">Tư vấn</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="d-flex align-items-center">
+                                    <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-light" style="width: 55px; height: 55px;">
+                                        <i class="fa fa-headphones text-primary"></i>
+                                    </div>
+                                    <div class="ms-4">
+                                        <p class="text-dark mb-2">Tận tâm</p>
+                                        <h5 class="text-dark mb-0">Hỗ trợ</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>     -->
+          </div>
+        </div>
+        <div class="col-lg-6 pe-lg-0 wow fadeIn" data-wow-delay="0.5s" style="min-height: 400px;">
+          <div class="position-relative h-100">
+            <img class="position-absolute img-fluid w-100 h-100" src="img/10.png" style="object-fit: cover;" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Feature End -->
+
+  <!-- Team Start -->
+  <div class="container-xxl py-3">
+    <div class="container">
+      <div class="text-center mx-auto mb-3 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+        <p class="d-inline-block border rounded-pill py-1 px-4">Bác sĩ</p>
+        <h1>Bác sĩ chuyên khoa trên 10 năm kinh nghiệm</h1>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+          <div class="team-item position-relative rounded overflow-hidden">
+            <div class="overflow-hidden">
+              <img class="img-fluid" src="img/15.png" alt="" />
+            </div>
+            <div class="team-text bg-light text-center p-4">
+              <h5>BS Hải</h5>
+              <p class="text-primary">Bs Tim mạch</p>
+              <div class="team-social text-center">
+                <!--     <a class="btn btn-square" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square" href=""><i class="fab fa-instagram"></i></a>     -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+          <div class="team-item position-relative rounded overflow-hidden">
+            <div class="overflow-hidden">
+              <img class="img-fluid" src="img/6.png" alt="" />
+            </div>
+            <div class="team-text bg-light text-center p-4">
+              <h5>BS Long</h5>
+              <p class="text-primary">Khoa Nội</p>
+              <div class="team-social text-center">
+                <!--     <a class="btn btn-square" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square" href=""><i class="fab fa-instagram"></i></a>     -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+          <div class="team-item position-relative rounded overflow-hidden">
+            <div class="overflow-hidden">
+              <img class="img-fluid" src="img/16.png" alt="" />
+            </div>
+            <div class="team-text bg-light text-center p-4">
+              <h5>Bs Linh</h5>
+              <p class="text-primary">Khoa Xét nghiệm</p>
+              <div class="team-social text-center">
+                <!--     <a class="btn btn-square" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square" href=""><i class="fab fa-instagram"></i></a>     -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
+          <div class="team-item position-relative rounded overflow-hidden">
+            <div class="overflow-hidden">
+              <img class="img-fluid" src="img/7.png" alt="" />
+            </div>
+            <div class="team-text bg-light text-center p-4">
+              <h5>Bs Ngọc</h5>
+              <p class="text-primary">Bệnh viện Nguyễn Trãi</p>
+              <div class="team-social text-center">
+                <!--     <a class="btn btn-square" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square" href=""><i class="fab fa-instagram"></i></a>     -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Team End -->
+
+  <!-- Service Start -->
+  <div class="container-xxl py-2">
+    <div class="container">
+      <div class="text-center mx-auto mb-3 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+        <p class="d-inline-block border rounded-pill py-1 px-4">Dịch vụ</p>
+        <h1>Giải pháp chăm sóc sức khỏe</h1>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+          <div class="service-item bg-light rounded h-100 p-5">
+            <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4"
+              style="width: 65px; height: 65px;">
+              <i class="fa fa-heartbeat text-primary fs-4"></i>
+            </div>
+            <h4 class="mb-3">Tim mạch</h4>
+            <p class="mb-4">Chăm sóc sức khỏe tim mạch</p>
+            <a class="btn" href=""><i class="fa fa-plus text-primary me-3"></i>Xem thêm</a>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+          <div class="service-item bg-light rounded h-100 p-5">
+            <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4"
+              style="width: 65px; height: 65px;">
+              <i class="fa fa-x-ray text-primary fs-4"></i>
+            </div>
+            <h4 class="mb-3">Hô hấp</h4>
+            <p class="mb-4">Chăm sóc sức khỏe hô hấp</p>
+            <a class="btn" href=""><i class="fa fa-plus text-primary me-3"></i>Xem thêm</a>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+          <div class="service-item bg-light rounded h-100 p-5">
+            <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4"
+              style="width: 65px; height: 65px;">
+              <i class="fa fa-brain text-primary fs-4"></i>
+            </div>
+            <h4 class="mb-3">Thần kinh</h4>
+            <p class="mb-4">Chăm sóc sức khỏe thần kinh</p>
+            <a class="btn" href=""><i class="fa fa-plus text-primary me-3"></i>Xem thêm</a>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+          <div class="service-item bg-light rounded h-100 p-5">
+            <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4"
+              style="width: 65px; height: 65px;">
+              <i class="fa fa-wheelchair text-primary fs-4"></i>
+            </div>
+            <h4 class="mb-3">Tiêu hóa</h4>
+            <p class="mb-4">Chăm sóc sức khỏe Tiêu hóa</p>
+            <a class="btn" href=""><i class="fa fa-plus text-primary me-3"></i>Xem thêm</a>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+          <div class="service-item bg-light rounded h-100 p-5">
+            <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4"
+              style="width: 65px; height: 65px;">
+              <i class="fa fa-tooth text-primary fs-4"></i>
+            </div>
+            <h4 class="mb-3">Phẫu thuật thẩm mĩ</h4>
+            <p class="mb-4">Thẩm mĩ Nội Ngoại khoa</p>
+            <a class="btn" href=""><i class="fa fa-plus text-primary me-3"></i>Xem thêm</a>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+          <div class="service-item bg-light rounded h-100 p-5">
+            <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4"
+              style="width: 65px; height: 65px;">
+              <i class="fa fa-vials text-primary fs-4"></i>
+            </div>
+            <h4 class="mb-3">Xét nghiệm</h4>
+            <p class="mb-4">Xét nghiệm tổng quát</p>
+            <a class="btn" href=""><i class="fa fa-plus text-primary me-3"></i>Xem thêm</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Service End -->
+
+
+
+  <!-- Testimonial Start -->
+  <div class="container-xxl py-3">
+    <div class="container">
+      <div class="text-center mx-auto mb-3 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+        <p class="d-inline-block border rounded-pill py-1 px-4">Khách hàng</p>
+        <h1>Ý kiến khách hàng</h1>
+      </div>
+      <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
+        <div class="testimonial-item text-center">
+          <img class="img-fluid bg-light rounded-circle p-2 mx-auto mb-4" src="img/3.jpg"
+            style="width: 100px; height: 100px;" />
+          <div class="testimonial-text rounded text-center p-4">
+            <p>Rất tốt</p>
+            <h5 class="mb-1">Nguyễn.T.H</h5>
+            <span class="fst-italic">Sinh viên trường Khoa học Xã hội nhân văn</span>
+          </div>
+        </div>
+        <div class="testimonial-item text-center">
+          <img class="img-fluid bg-light rounded-circle p-2 mx-auto mb-4" src="img/8.png"
+            style="width: 100px; height: 100px;" />
+          <div class="testimonial-text rounded text-center p-4">
+            <p>Tuyệt vời</p>
+            <h5 class="mb-1">Trần.A.V</h5>
+            <span class="fst-italic">Sinh viên</span>
+          </div>
+        </div>
+        <div class="testimonial-item text-center">
+          <img class="img-fluid bg-light rounded-circle p-2 mx-auto mb-4" src="img/11.png"
+            style="width: 100px; height: 100px;" />
+          <div class="testimonial-text rounded text-center p-4">
+            <p>Rất tốt</p>
+            <h5 class="mb-1">Võ.T.B</h5>
+            <span class="fst-italic">Nhân viên ACB</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Testimonial End -->
+
+  <!-- Footer Start -->
+  <div class="container-fluid bg-dark text-light footer mt-3 pt-2 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container py-3">
+      <div class="row g-5">
+        <div class="col-lg-6 col-md-6">
+          <h5 class="text-light mb-4">Liên hệ</h5>
+          <p>
+            <i class="fa fa-map-marker-alt me-3"></i> <small>579a, đường Nguyễn Ảnh Thủ, Quận 12, TPHCM</small>
+            <i class="fa fa-copy text-light ms-2" id="copyAddress"
+              onclick="copyAddressToClipboard('579a,đường Nguyễn Ảnh Thủ, Quận 12, TPHCM')" style="cursor: pointer;"
+              title="Copy address"></i>
+            <span id="copyAddressFeedback"
+              style="color: #f8d675; display: none; margin-left: 10px; font-size: 12px;">Copied!</span>
+          </p>
+          <p>
+            <i class="fa fa-phone-alt me-3"></i><a href="tel:0867607890" class="mb-2"><small
+                class="text-white">0867607890</small></a>
+            <i class="fa fa-copy text-light ms-2" id="copyNumber" onclick="copyPhoneToClipboard('0867607890')"
+              style="cursor: pointer;" title="Copy phone number"></i>
+            <span id="copyFeedbackFooter"
+              style="color: #f8d675; display: none; margin-left: 10px; font-size: 12px;">Copied!</span>
+          </p>
+          <p class="mb-2">
+            <i class="fa fa-envelope me-3"></i><small>hongnhantphcm718@gmail.com</small>
+            <i class="fa fa-copy text-light ms-2" id="copyEmail"
+              onclick="copyEmailToClipboard('hongnhantphcm718@gmail.com')" style="cursor: pointer;"
+              title="Copy email address"></i>
+            <span id="copyEmailFeedback"
+              style="color: #f8d675; display: none; margin-left: 10px; font-size: 12px;">Copied!</span>
+          </p>
+          <div class="d-flex pt-2">
+            <a class="btn btn-outline-light btn-social rounded-circle" href=""><i class="fab fa-twitter"></i></a>
+            <a class="btn btn-outline-light btn-social rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
+            <a class="btn btn-outline-light btn-social rounded-circle" href=""><i class="fab fa-youtube"></i></a>
+            <a class="btn btn-outline-light btn-social rounded-circle" href=""><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <!--     <div class="col-lg-2 col-md-6">
+                    <h5 class="text-light mb-4">Dịch vụ</h5>
+                    <a class="btn btn-link" href="">Thẩm mĩ</a>
+                </div>     -->
+        <div class="col-lg-6 col-md-12">
+          <!--     <h5 class="text-light mb-4">Thêm</h5>
+                    <a class="btn btn-link" href="">Giới thiệu</a>
+                    <a class="btn btn-link" href="">Liên hệ</a>
+                    <a class="btn btn-link" href="">Dịch vụ</a>
+                    <a class="btn btn-link" href="">Chăm sóc khách hàng</a>
+                    <a class="btn btn-link" href="">Hỗ trợ</a>     -->
+          <div class="fb-page" data-href="https://www.facebook.com/profile.php?id=61580001757375" data-tabs="timeline"
+            data-width="" data-height="70" data-small-header="false" data-adapt-container-width="true"
+            data-hide-cover="false" data-show-facepile="true">
+            <blockquote cite="https://www.facebook.com/profile.php?id=61580001757375" class="fb-xfbml-parse-ignore">
+              <a href="https://www.facebook.com/profile.php?id=61580001757375">Thẩm mĩ Hồng Nhan</a>
+            </blockquote>
+          </div>
+        </div>
+        <!--     <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-4">Tin mới</h5>
+                    <p>Follow nhé</p>
+                    <div class="position-relative mx-auto" style="max-width: 400px;">
+                        <input class="form-control border-0 w-100 py-3 ps-4 pe-5" type="text" placeholder="Email của bạn">
+                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">Đăng ký</button>
+                    </div>
+                </div>     -->
+      </div>
+    </div>
+    <div class="container">
+      <div class="copyright">
+        <div class="row">
+          <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+            &copy; <a href="#">hongnhantphcm.com</a>
+          </div>
+          <div class="col-md-6 text-center text-md-end">
+            <!--     /*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/
+                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>     -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Footer End -->
+
+  <!-- JavaScript Libraries -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="lib/wow/wow.min.js"></script>
+  <script src="lib/easing/easing.min.js"></script>
+  <script src="lib/waypoints/waypoints.min.js"></script>
+  <script src="lib/counterup/counterup.min.js"></script>
+  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+  <script src="lib/tempusdominus/js/moment.min.js"></script>
+  <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+  <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+  <!-- Template Javascript -->
+  <script src="js/main.js"></script>
+  
+  <!-- phoneCircle Chat Button - Updated onclick handler -->
+  <button type="button" id="linkphoneCircle">
+    <div class="fcta-phoneCircle-vi-tri-nut">
+      <div id="fcta-phoneCircle-tracking" class="fcta-phoneCircle-nen-nut">
+        <div id="fcta-phoneCircle-tracking" class="fcta-phoneCircle-ben-trong-nut">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"
+              fill="#ffffff" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </button>
+
+  <!-- Zalo Chat Button -->
+  <a href="https://zalo.me/0867607890" id="linkzalo" target="_blank" rel="noopener noreferrer">
+    <div class="fcta-zalo-vi-tri-nut">
+      <div id="fcta-zalo-tracking" class="fcta-zalo-nen-nut">
+        <div id="fcta-zalo-tracking" class="fcta-zalo-ben-trong-nut">
+          <svg id="svg_zalo_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="1.1" viewBox="0 0 614.501 613.667" xml:space="preserve">
+            <path fill="#FFFFFF"
+              d="M464.721,301.399c-13.984-0.014-23.707,11.478-23.944,28.312c-0.251,17.771,9.168,29.208,24.037,29.202   c14.287-0.007,23.799-11.095,24.01-27.995C489.028,313.536,479.127,301.399,464.721,301.399z" />
+            <path fill="#FFFFFF"
+              d="M291.83,301.392c-14.473-0.316-24.578,11.603-24.604,29.024c-0.02,16.959,9.294,28.259,23.496,28.502   c15.072,0.251,24.592-10.87,24.539-28.707C315.214,313.318,305.769,301.696,291.83,301.392z" />
+            <path fill="#FFFFFF"
+              d="M310.518,3.158C143.102,3.158,7.375,138.884,7.375,306.3s135.727,303.142,303.143,303.142   c167.415,0,303.143-135.727,303.143-303.142S477.933,3.158,310.518,3.158z M217.858,391.083   c-33.364,0.818-66.828,1.353-100.133-0.343c-21.326-1.095-27.652-18.647-14.248-36.583c21.55-28.826,43.886-57.065,65.792-85.621   c2.546-3.305,6.214-5.996,7.15-12.705c-16.609,0-32.784,0.04-48.958-0.013c-19.195-0.066-28.278-5.805-28.14-17.652   c0.132-11.768,9.175-17.329,28.397-17.348c25.159-0.026,50.324-0.06,75.476,0.026c9.637,0.033,19.604,0.105,25.304,9.789   c6.22,10.561,0.284,19.512-5.646,27.454c-21.26,28.497-43.015,56.624-64.559,84.902c-2.599,3.41-5.119,6.88-9.453,12.725   c23.424,0,44.123-0.053,64.816,0.026c8.674,0.026,16.662,1.873,19.941,11.267C237.892,379.329,231.368,390.752,217.858,391.083z    M350.854,330.211c0,13.417-0.093,26.841,0.039,40.265c0.073,7.599-2.599,13.647-9.512,17.084   c-7.296,3.642-14.71,3.028-20.304-2.968c-3.997-4.281-6.214-3.213-10.488-0.422c-17.955,11.728-39.908,9.96-56.597-3.866   c-29.928-24.789-30.026-74.803-0.211-99.776c16.194-13.562,39.592-15.462,56.709-4.143c3.951,2.619,6.201,4.815,10.396-0.053   c5.39-6.267,13.055-6.761,20.271-3.357c7.454,3.509,9.935,10.165,9.776,18.265C350.67,304.222,350.86,317.217,350.854,330.211z    M395.617,369.579c-0.118,12.837-6.398,19.783-17.196,19.908c-10.779,0.132-17.593-6.966-17.646-19.512   c-0.179-43.352-0.185-86.696,0.007-130.041c0.059-12.256,7.302-19.921,17.896-19.222c11.425,0.752,16.992,7.448,16.992,18.833   c0,22.104,0,44.216,0,66.327C395.677,327.105,395.828,348.345,395.617,369.579z M463.981,391.868   c-34.399-0.336-59.037-26.444-58.786-62.289c0.251-35.66,25.304-60.713,60.383-60.396c34.631,0.304,59.374,26.306,58.998,61.986   C524.207,366.492,498.534,392.205,463.981,391.868z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </a>
+</body>
+
+</html>

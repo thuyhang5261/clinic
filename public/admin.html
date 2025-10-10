@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LiveStream App</title>
+    <!-- Suppress favicon error -->
+    <link rel="icon" href="data:,">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .livestream-container {
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .livestream-window {
+            background: #000;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .window-header {
+            background: linear-gradient(90deg, #333, #444);
+            height: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+        }
+
+        .window-title {
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .window-btn {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+
+        .expand-btn {
+            background: #ffc107;
+            color: #000;
+        }
+
+        .close-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        .window-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .video-container {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+        }
+
+        #videoElement {
+            transform: scaleX(-1);
+            border: none;
+        }
+
+        /* Hidden canvas for video processing */
+        #processCanvas {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .control-bar {
+            background: linear-gradient(90deg, #2c3e50, #34495e);
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 25px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            min-width: 70px;
+            justify-content: center;
+        }
+
+        .control-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .control-btn.active {
+            background: #28a745;
+        }
+
+        .control-btn.live {
+            background: #dc3545;
+            color: white;
+            font-weight: bold;
+        }
+
+        .control-btn.live.active {
+            background: #ff1744;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 23, 68, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 23, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 23, 68, 0); }
+        }
+
+        .status-indicator {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            z-index: 10;
+        }
+
+        /* Chat Styles */
+        .chat-container {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            height: 520px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .chat-header {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            background: white;
+        }
+
+        .chat-message {
+            background: #f8f9fa;
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 18px;
+            font-size: 14px;
+            animation: fadeIn 0.5s ease-in;
+            max-width: 80%;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .chat-message.user {
+            background: #007bff;
+            color: white;
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .chat-message.guest {
+            background: #e9ecef;
+        }
+
+        .chat-message.system {
+            background: #28a745;
+            color: white;
+            text-align: center;
+            margin: 10px auto;
+            max-width: 60%;
+        }
+
+        .chat-message.admin {
+            background: #fd7e14;
+            color: white;
+            font-weight: bold;
+            border-left: 4px solid #fff;
+        }
+
+        .chat-message.fade {
+            opacity: 0.4;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chat-input-container {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 0 0 15px 15px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            border: 1px solid #dee2e6;
+            border-radius: 25px;
+            padding: 10px 15px;
+            font-size: 14px;
+        }
+
+        .chat-btn {
+            background: #007bff;
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-btn:hover {
+            background: #0056b3;
+            transform: scale(1.1);
+        }
+
+        .chat-btn.heart {
+            background: #dc3545;
+        }
+
+        .chat-btn.heart:hover {
+            background: #c82333;
+        }
+
+        /* Admin Panel Styles */
+        .admin-controls {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .admin-btn {
+            margin: 5px;
+            border-radius: 25px;
+            padding: 8px 16px;
+            font-size: 12px;
+        }
+
+        .viewer-count {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 991.98px) {
+            .video-container {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .control-btn {
+                padding: 6px 10px;
+                font-size: 10px;
+                min-width: 60px;
+            }
+            .livestream-container {
+                padding: 10px;
+            }
+            .video-container {
+                height: 250px;
+            }
+        }
+
+        .fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1000;
+            border-radius: 0;
+        }
+
+        .fullscreen .video-container {
+            height: calc(100vh - 120px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Controls -->
+    <div class="admin-controls">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h5 class="text-white mb-0">
+                    <i class="fas fa-cog me-2"></i>Admin Panel - LiveStream Control
+                </h5>
+                <small class="text-white-50">
+                    📹 Click "GO LIVE" to start streaming directly to RTMP server (No OBS required)
+                </small>
+            </div>
+            <div class="col-md-4 text-end">
+                <div class="viewer-count">
+                    <i class="fas fa-eye me-1"></i><span id="adminViewerCount">0</span> viewers
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <button class="btn btn-success admin-btn" id="adminStartStream">
+                    <i class="fas fa-play"></i> Start Stream
+                </button>
+                <button class="btn btn-danger admin-btn" id="adminStopStream">
+                    <i class="fas fa-stop"></i> Stop Stream
+                </button>
+                <button class="btn btn-warning admin-btn" id="adminClearChat">
+                    <i class="fas fa-broom"></i> Clear Chat
+                </button>
+                <button class="btn btn-info admin-btn" id="adminSendMessage">
+                    <i class="fas fa-megaphone"></i> Broadcast Message
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid livestream-container">
+        <div class="row">
+            <!-- Livestream Window -->
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                <div class="livestream-window" id="livestreamWindow">
+                    <!-- Window Header -->
+                    <div class="window-header">
+                        <div class="window-title">
+                            <i class="fas fa-broadcast-tower me-2"></i>LiveStream - Thắng's Channel (Admin)
+                        </div>
+                        <div class="window-controls">
+                            <button class="window-btn expand-btn" id="expandBtn" title="Expand">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                            <button class="window-btn close-btn" id="closeBtn" title="Close">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Video Container -->
+                    <div class="video-container">
+                        <video id="videoElement" class="img-fluid w-100 h-100" autoplay muted playsinline style="object-fit: cover;"></video>
+                        <!-- Hidden canvas for stream processing -->
+                        <canvas id="processCanvas" width="640" height="480"></canvas>
+                        
+                        <!-- Status Indicator -->
+                        <div class="status-indicator" id="statusIndicator">
+                            <i class="fas fa-video me-1"></i>Click camera to start
+                        </div>
+                    </div>
+
+                    <!-- Control Bar -->
+                    <div class="control-bar">
+                        <button class="control-btn" id="cameraBtn">
+                            <i class="fas fa-video"></i> Camera
+                        </button>
+                        <button class="control-btn" id="flipBtn">
+                            <i class="fas fa-sync-alt"></i> Flip
+                        </button>
+                        <button class="control-btn live" id="liveBtn">
+                            <i class="fas fa-circle"></i> GO LIVE
+                        </button>
+                        <button class="control-btn" id="voiceBtn">
+                            <i class="fas fa-microphone"></i> Voice
+                        </button>
+                        <button class="control-btn" id="settingsBtn">
+                            <i class="fas fa-cog"></i> Settings
+                        </button>
+                        <button class="control-btn" id="filterBtn">
+                            <i class="fas fa-magic"></i> Filter
+                        </button>
+                        <button class="control-btn" id="shareBtn">
+                            <i class="fas fa-share"></i> Share
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Container -->
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                <div class="chat-container" id="chatContainer">
+                    <div class="chat-header">
+                        <i class="fas fa-comments me-2"></i>Live Chat (Admin View)
+                    </div>
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="chat-message system">Welcome to Thắng's Live Stream! 🎉</div>
+                        <div class="chat-message guest">Hello everyone! 👋</div>
+                        <div class="chat-message guest">Great stream quality!</div>
+                    </div>
+                    <div class="chat-input-container">
+                        <textarea class="chat-input" id="chatInput" placeholder="Type admin message..." rows="1"></textarea>
+                        <button class="chat-btn" id="attachBtn" title="Attach File">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                        <button class="chat-btn heart" id="heartBtn" title="Send Heart">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                        <button class="chat-btn" id="sendBtn" title="Send Message">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        let localStream = null;
+        let mediaRecorder = null;
+        let ws = null;
+        let isStreaming = false;
+        let reconnectTimer = null;
+
+        // Camera control
+        document.getElementById('cameraBtn').addEventListener('click', async () => {
+            const videoElement = document.getElementById('videoElement');
+            const btn = document.getElementById('cameraBtn');
+            
+            if (!localStream) {
+                try {
+                    localStream = await navigator.mediaDevices.getUserMedia({ 
+                        video: { 
+                            width: { ideal: 1280 },
+                            height: { ideal: 720 },
+                            frameRate: { ideal: 30 }
+                        }, 
+                        audio: {
+                            echoCancellation: true,
+                            noiseSuppression: true,
+                            autoGainControl: true
+                        }
+                    });
+                    videoElement.srcObject = localStream;
+                    btn.classList.add('active');
+                    document.getElementById('statusIndicator').innerHTML = 
+                        '<i class="fas fa-video me-1"></i>Camera ready';
+                } catch (err) {
+                    console.error('Error accessing camera:', err);
+                    alert('Could not access camera. Please check permissions.');
+                }
+            } else {
+                localStream.getTracks().forEach(track => track.stop());
+                videoElement.srcObject = null;
+                localStream = null;
+                btn.classList.remove('active');
+                document.getElementById('statusIndicator').innerHTML = 
+                    '<i class="fas fa-video-slash me-1"></i>Camera off';
+            }
+        });
+
+        // WebSocket connection to RTMP bridge
+        function connectWebSocket() {
+            return new Promise((resolve, reject) => {
+                const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+                const host = window.location.hostname;
+                const port = window.location.port || (protocol === 'wss:' ? '443' : '3000');
+                ws = new WebSocket(`${protocol}//${host}:${port}/rtmp-bridge`);
+                
+                ws.onopen = () => {
+                    console.log('Connected to RTMP bridge');
+                    resolve();
+                };
+                
+                ws.onerror = (error) => {
+                    console.error('WebSocket error:', error);
+                    reject(error);
+                };
+                
+                ws.onclose = () => {
+                    console.log('Disconnected from RTMP bridge');
+                    if (isStreaming) {
+                        // Try to reconnect
+                        reconnectTimer = setTimeout(() => {
+                            connectWebSocket().then(startRecording).catch(console.error);
+                        }, 3000);
+                    }
+                };
+            });
+        }
+
+        // Start recording and streaming
+        function startRecording() {
+            if (!localStream || !ws || ws.readyState !== WebSocket.OPEN) return;
+            
+            const options = {
+                mimeType: 'video/webm;codecs=vp8,opus',
+                videoBitsPerSecond: 2500000,
+                audioBitsPerSecond: 128000
+            };
+            
+            if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+                options.mimeType = 'video/webm';
+            }
+            
+            mediaRecorder = new MediaRecorder(localStream, options);
+            
+            mediaRecorder.ondataavailable = (event) => {
+                if (event.data.size > 0 && ws && ws.readyState === WebSocket.OPEN) {
+                    ws.send(event.data);
+                }
+            };
+            
+            mediaRecorder.onerror = (error) => {
+                console.error('MediaRecorder error:', error);
+                stopStreaming();
+            };
+            
+            mediaRecorder.start(100); // Send chunks every 100ms for low latency
+            
+            document.getElementById('statusIndicator').innerHTML = 
+                '<i class="fas fa-broadcast-tower me-1"></i>LIVE - Streaming to RTMP';
+        }
+
+        // Start/Stop streaming
+        document.getElementById('liveBtn').addEventListener('click', async () => {
+            const btn = document.getElementById('liveBtn');
+            
+            if (!localStream) {
+                alert('Please turn on camera first!');
+                return;
+            }
+            
+            if (!isStreaming) {
+                // Start streaming
+                try {
+                    isStreaming = true;
+                    btn.classList.add('active');
+                    btn.innerHTML = '<i class="fas fa-stop"></i> STOP';
+                    
+                    await connectWebSocket();
+                    startRecording();
+                } catch (error) {
+                    console.error('Failed to start streaming:', error);
+                    alert('Failed to connect to streaming server');
+                    stopStreaming();
+                }
+            } else {
+                stopStreaming();
+            }
+        });
+
+        function stopStreaming() {
+            isStreaming = false;
+            
+            if (reconnectTimer) {
+                clearTimeout(reconnectTimer);
+                reconnectTimer = null;
+            }
+            
+            const btn = document.getElementById('liveBtn');
+            btn.classList.remove('active');
+            btn.innerHTML = '<i class="fas fa-circle"></i> GO LIVE';
+            
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+            }
+            mediaRecorder = null;
+            
+            if (ws) {
+                ws.close();
+                ws = null;
+            }
+            
+            document.getElementById('statusIndicator').innerHTML = 
+                '<i class="fas fa-video me-1"></i>Stream stopped';
+        }
+
+        // Admin controls
+        document.getElementById('adminStartStream').addEventListener('click', () => {
+            if (!isStreaming) {
+                document.getElementById('liveBtn').click();
+            }
+        });
+
+        document.getElementById('adminStopStream').addEventListener('click', () => {
+            if (isStreaming) {
+                stopStreaming();
+            }
+        });
+
+        document.getElementById('adminClearChat').addEventListener('click', () => {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = '<div class="chat-message system">Chat cleared by admin</div>';
+        });
+
+        document.getElementById('adminSendMessage').addEventListener('click', () => {
+            const message = prompt('Enter broadcast message:');
+            if (message) {
+                const chatMessages = document.getElementById('chatMessages');
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'chat-message admin';
+                msgDiv.textContent = `📢 Admin: ${message}`;
+                chatMessages.appendChild(msgDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        });
+
+        // Other controls
+        document.getElementById('flipBtn').addEventListener('click', () => {
+            const video = document.getElementById('videoElement');
+            video.style.transform = video.style.transform === 'scaleX(-1)' ? 'scaleX(1)' : 'scaleX(-1)';
+        });
+
+        document.getElementById('voiceBtn').addEventListener('click', () => {
+            const btn = document.getElementById('voiceBtn');
+            if (localStream) {
+                const audioTrack = localStream.getAudioTracks()[0];
+                if (audioTrack) {
+                    audioTrack.enabled = !audioTrack.enabled;
+                    btn.classList.toggle('active');
+                    btn.innerHTML = audioTrack.enabled ? 
+                        '<i class="fas fa-microphone"></i> Voice' : 
+                        '<i class="fas fa-microphone-slash"></i> Muted';
+                }
+            }
+        });
+
+        document.getElementById('expandBtn').addEventListener('click', () => {
+            const window = document.getElementById('livestreamWindow');
+            window.classList.toggle('fullscreen');
+            const icon = window.classList.contains('fullscreen') ? 'compress' : 'expand';
+            document.getElementById('expandBtn').innerHTML = `<i class="fas fa-${icon}"></i>`;
+        });
+
+        document.getElementById('closeBtn').addEventListener('click', () => {
+            if (confirm('Are you sure you want to close the stream?')) {
+                stopStreaming();
+                if (localStream) {
+                    localStream.getTracks().forEach(track => track.stop());
+                }
+                window.location.href = '/';
+            }
+        });
+
+        // Chat functionality (local only - no Socket.IO)
+        document.getElementById('sendBtn').addEventListener('click', () => {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (message) {
+                const chatMessages = document.getElementById('chatMessages');
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'chat-message admin';
+                msgDiv.textContent = `Admin: ${message}`;
+                chatMessages.appendChild(msgDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                input.value = '';
+            }
+        });
+
+        document.getElementById('chatInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                document.getElementById('sendBtn').click();
+            }
+        });
+
+        // Update viewer count
+        setInterval(async () => {
+            try {
+                const response = await fetch('/api/stats');
+                const data = await response.json();
+                document.getElementById('adminViewerCount').textContent = data.viewers || 0;
+                
+                // Update status based on stream state
+                if (data.isLive && !isStreaming) {
+                    document.getElementById('statusIndicator').innerHTML = 
+                        '<i class="fas fa-info-circle me-1"></i>Stream active (external)';
+                }
+            } catch (error) {
+                console.error('Error fetching stats:', error);
+            }
+        }, 5000);
+
+        // Clean up on page unload
+        window.addEventListener('beforeunload', () => {
+            stopStreaming();
+            if (localStream) {
+                localStream.getTracks().forEach(track => track.stop());
+            }
+        });
+    </script>
+</body>
+</html>
