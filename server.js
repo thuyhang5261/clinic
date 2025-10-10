@@ -10,7 +10,7 @@ const { spawn } = require('child_process');
 
 const app = express();
 const HTTP_PORT = 3000;
-const HTTPS_PORT = 443;
+const HTTPS_PORT = 3443; // Changed from 443 to avoid permission issues
 const RTMP_PORT = 1935;
 
 // Ensure media directories exist
@@ -27,6 +27,30 @@ app.use('/hls', express.static(liveDir));
 // Serve admin page
 app.get('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'admin.html'));
+});
+
+// Stream status endpoint
+app.get('/api/stream/status', (req, res) => {
+  const streamPath = path.join(liveDir, 'stream', 'index.m3u8');
+  
+  if (fs.existsSync(streamPath)) {
+    try {
+      const content = fs.readFileSync(streamPath, 'utf8');
+      const isLive = !content.includes('#EXT-X-ENDLIST') && content.includes('.ts');
+      const segments = (content.match(/\.ts/g) || []).length;
+      
+      res.json({
+        status: isLive ? 'LIVE' : 'OFFLINE',
+        segments: segments,
+        lastUpdate: fs.statSync(streamPath).mtime,
+        content: content.substring(0, 200) + '...'
+      });
+    } catch (error) {
+      res.json({ status: 'ERROR', error: error.message });
+    }
+  } else {
+    res.json({ status: 'NO_STREAM', message: 'Stream file not found' });
+  }
 });
 
 // Proxy for HLS files
@@ -56,8 +80,8 @@ const config = {
       {
         app: 'live',
         hls: true,
-        hlsFlags: '[hls_time=2:hls_list_size=3:hls_flags=delete_segments]',
-        hlsKeep: false,
+        hlsFlags: '[hls_time=4:hls_list_size=5:hls_flags=delete_segments]',
+        hlsKeep: true, // Keep segments for better playback
         dash: false
       }
     ]
@@ -69,9 +93,9 @@ nms.run();
 
 // SSL Configuration
 let httpsServer;
-const sslPath = path.join(__dirname, 'ssl');
-const keyPath = path.join(sslPath, 'server.key');
-const certPath = path.join(sslPath, 'server.crt');
+const sslPath = path.join(__dirname, 'phongkhamhongnhan.com');
+const keyPath = path.join(sslPath, 'privkey.pem');
+const certPath = path.join(sslPath, 'fullchain.pem');
 
 if (fs.existsSync(keyPath) && fs.existsSync(certPath)) {
   const sslOptions = {
@@ -173,13 +197,25 @@ app.get('/api/stats', (req, res) => {
 // Start servers
 httpServer.listen(HTTP_PORT, () => {
   console.log(`HTTP Server running on http://localhost:${HTTP_PORT}`);
+  console.log(`RTMP Server running on rtmp://localhost:${RTMP_PORT}/live`);
+  console.log(`HLS files available at http://localhost:${HTTP_PORT}/live/stream/index.m3u8`);
 });
 
+// Start HTTPS Server with error handling
 if (httpsServer) {
   httpsServer.listen(HTTPS_PORT, () => {
     console.log(`HTTPS Server running on https://localhost:${HTTPS_PORT}`);
-    console.log(`RTMP Server running on rtmp://localhost:${RTMP_PORT}/live`);
-    console.log(`HLS files available at https://localhost:${HTTPS_PORT}/hls/stream.m3u8`);
+    console.log(`HLS files available at https://localhost:${HTTPS_PORT}/live/stream/index.m3u8`);
+  });
+  
+  httpsServer.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.error(`Port ${HTTPS_PORT} is already in use. HTTPS server not started.`);
+    } else if (err.code === 'EACCES') {
+      console.error(`Permission denied. Cannot bind to port ${HTTPS_PORT}. Try running as administrator or use a different port.`);
+    } else {
+      console.error('HTTPS server error:', err);
+    }
   });
 } else {
   console.log('HTTPS server not started. Please generate SSL certificates.');
