@@ -1455,6 +1455,67 @@
   <!-- Template Javascript -->
   <script src="js/main.js"></script>
   
+  <!-- Stream Player Initialization -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const video = document.getElementById('streamPlayer');
+      const streamUrl = '/live/stream/index.m3u8';
+      
+      if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(streamUrl);
+        hls.attachMedia(video);
+        
+        hls.on(Hls.Events.MANIFEST_PARSED, function() {
+          console.log('Stream manifest loaded');
+        });
+        
+        hls.on(Hls.Events.ERROR, function(event, data) {
+          console.error('HLS error:', data);
+          // Show placeholder when stream is offline
+          if (data.fatal) {
+            showStreamOffline();
+          }
+        });
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        // Native HLS support (Safari)
+        video.src = streamUrl;
+      }
+      
+      function showStreamOffline() {
+        video.style.display = 'none';
+        // Add a placeholder or message
+        const container = video.parentElement;
+        let offlineMsg = container.querySelector('.stream-offline');
+        if (!offlineMsg) {
+          offlineMsg = document.createElement('div');
+          offlineMsg.className = 'stream-offline text-center p-5';
+          offlineMsg.innerHTML = '<h4>Phòng khám hiện đang offline</h4><p>Vui lòng quay lại sau</p>';
+          container.appendChild(offlineMsg);
+        }
+      }
+      
+      // Check stream status periodically
+      setInterval(async function() {
+        try {
+          const response = await fetch('/api/stream/status');
+          const status = await response.json();
+          if (status.status === 'OFFLINE') {
+            showStreamOffline();
+          } else {
+            video.style.display = 'block';
+            const offlineMsg = video.parentElement.querySelector('.stream-offline');
+            if (offlineMsg) {
+              offlineMsg.remove();
+            }
+          }
+        } catch (error) {
+          console.error('Error checking stream status:', error);
+        }
+      }, 10000); // Check every 10 seconds
+    });
+  </script>
+  
   <!-- phoneCircle Chat Button - Updated onclick handler -->
   <button type="button" id="linkphoneCircle">
     <div class="fcta-phoneCircle-vi-tri-nut">
