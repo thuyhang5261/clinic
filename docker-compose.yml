@@ -3,9 +3,7 @@ version: '3.8'
 services:
   # clinic WebRTC Application
   clinic-app:
-    build:
-      context: .
-      target: base
+    image: thuyhang5261/clinic-app:latest
     container_name: clinic-webrtc-app
     restart: unless-stopped
     ports:
@@ -23,9 +21,7 @@ services:
 
   # Nginx Reverse Proxy
   nginx:
-    build:
-      context: .
-      target: nginx-rtmp
+    image: thuyhang5261/clinic-nginx:latest
     container_name: clinic-nginx
     restart: unless-stopped
     ports:
