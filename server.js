@@ -54,7 +54,7 @@ function startRTMPStream() {
 
     ffmpegProcess = ffmpeg()
         .input('pipe:0') // Read from stdin
-        .inputFormat('webm') // Input format from MediaRecorder
+        .inputFormat('webm') // Explicitly set WebM input format
         .videoCodec('libx264')
         .audioCodec('aac')
         .format('flv') // RTMP requires FLV format
@@ -63,7 +63,10 @@ function startRTMPStream() {
             '-tune zerolatency',
             '-b:v 1000k', // Video bitrate
             '-b:a 128k',  // Audio bitrate
-            '-f flv'      // Force FLV format
+            '-f flv',     // Force FLV format
+            '-fflags +genpts', // Generate presentation timestamps
+            '-avoid_negative_ts make_zero', // Handle timestamp issues
+            '-max_muxing_queue_size 1024' // Increase muxing queue size
         ])
         .output('rtmp://localhost:1935/live/stream')
         .on('start', (commandLine) => {
@@ -153,6 +156,7 @@ io.on('connection', (socket) => {
 
             // Write stream data to FFmpeg
             if (data && data.length > 0) {
+                console.log(`📊 Received stream data: ${data.length} bytes`);
                 writeToFFmpeg(Buffer.from(data));
             }
         }
