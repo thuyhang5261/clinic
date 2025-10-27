@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # clinic WebRTC Application
+  clinic-app:
+    build:
+      context: .
+      target: base
+    container_name: clinic-webrtc-app
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - clinic-network
+    healthcheck:
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "--no-check-certificate", "https://localhost:5000/" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Nginx Reverse Proxy
+  nginx:
+    build:
+      context: .
+      target: nginx-rtmp
+    container_name: clinic-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "1935:1935"
+    depends_on:
+      clinic-app:
+        condition: service_healthy
+    networks:
+      - clinic-network
+    volumes:
+      - ./phongkhamhongnhan.com:/etc/nginx/ssl/phongkhamhongnhan.com:ro
+      - nginx-logs:/var/log/nginx
+      - livestream-data:/var/livestream
+    healthcheck:
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:80/" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+networks:
+  clinic-network:
+    driver: bridge
+    name: clinic-webrtc-network
+
+volumes:
+  nginx-logs:
+    name: clinic-nginx-logs
+  livestream-data:
+    name: clinic-livestream-data

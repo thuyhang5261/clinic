@@ -1,0 +1,18 @@
+{
+  "name": "clinic-webrtc",
+  "version": "1.0.0",
+  "description": "clinic WebRTC Server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "@mapbox/node-pre-gyp": "1.x",
+    "body-parser": "^1.19.0",
+    "express": "^4.21.2",
+    "fluent-ffmpeg": "^2.1.2",
+    "socket.io": "^4.7.2",
+    "wrtc": "^0.4.7"
+  }
+}
